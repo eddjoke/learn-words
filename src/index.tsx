@@ -7,8 +7,17 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const words = {
+  Require: "Reikalauti",
+  Communicate: "Bendrauti",
+  Solve: "Išspręsti",
+  "To improve": "Patobulinti",
+  Fluently: "Laisvai",
+  "Find out": "Sužinoti",
+};
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App words={words} />
   </React.StrictMode>
 );

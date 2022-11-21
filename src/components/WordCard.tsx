@@ -1,10 +1,10 @@
 import cx from "classnames";
 
-type Props = {
+interface Props extends React.DOMAttributes<HTMLButtonElement> {
   status?: "neutral" | "error" | "success";
-};
+}
 
-function WordCard({ status = "neutral" }: Props) {
+function WordCard({ status = "neutral", children, onClick }: Props) {
   const classesByStatus = {
     success: "bg-green-600",
     error: "bg-red-600",
@@ -13,9 +13,13 @@ function WordCard({ status = "neutral" }: Props) {
 
   return (
     <button
-      className={cx("p-5 rounded-xl w-full text text-2xl", classesByStatus)}
+      className={cx(
+        "p-5 rounded-xl w-full text text-2xl uppercase",
+        classesByStatus
+      )}
+      onClick={onClick}
     >
-      Word
+      {children}
     </button>
   );
 }
