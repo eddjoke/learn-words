@@ -1,0 +1,27 @@
+*
+CHANGELOG.md
+!*/
+!*.yml
+!*.json
+!*.js
+!*.mjs
+!*.ts
+!*.tsx
+!*.html
+!*.css
+
+# npm files
+node_modules
+package.json
+package-lock.json
+
+# project
+dist
+lib
+.yarn
+.history
+**/coverage/
+
+# netlify
+.netlify
+netlify

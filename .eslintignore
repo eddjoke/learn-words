@@ -1,0 +1,9 @@
+# npm files
+node_modules
+
+# project
+build
+dist
+.yarn
+*.cjs
+!.prettierrc.js
