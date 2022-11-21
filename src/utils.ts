@@ -1,7 +1,7 @@
 export const getRandomIndex = (length: number) =>
   Math.floor(Math.random() * length);
 
-export const shuffleArray = (array: any[]) =>
+export const shuffleArray = (array: string[]) =>
   array.sort(() => Math.random() - 0.5);
 
 export const pickData = (words: Record<string, string>) => {
