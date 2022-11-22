@@ -1,14 +1,11 @@
 import WordPanel from "./components/WordPanel";
+import { languages, words } from "./constants";
 
-type Props = {
-  words: Record<string, string>;
-};
-
-function App({ words }: Props) {
+function App() {
   return (
     <div className="absolute h-full w-full">
-      <div className="text-gray-100 p-20 h-full">
-        <WordPanel words={words} />
+      <div className="text-gray-100 p-6 sm:p-10 md:p-20 h-full">
+        <WordPanel languages={languages} words={words} />
       </div>
     </div>
   );

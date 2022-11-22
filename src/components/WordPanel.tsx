@@ -1,50 +1,63 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { pickData } from "../utils";
 import WordCard from "./WordCard";
 
 type Props = {
+  languages: string[];
   words: Record<string, string>;
 };
 
-function WordPanel({ words }: Props) {
+function WordPanel({ languages, words }: Props) {
   const [clickedCardIndex, setClickedCardIndex] = useState(-1);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [inverted, setInverted] = useState(true);
 
-  const getWords = () => {
+  const getWords = useCallback(() => {
     const reversedWords = Object.fromEntries(
       Object.entries(words).map(([key, value]) => [value, key])
     );
 
     return pickData(inverted ? reversedWords : words);
-  };
+  }, [inverted, words]);
 
   const [{ word, answers, answer }, setData] = useState(getWords());
 
   const switchLanguages = () => {
     setInverted(!inverted);
-    reset();
   };
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setData(getWords());
     setButtonsDisabled(false);
     setClickedCardIndex(-1);
-  };
+  }, [getWords]);
 
   const onWordClick = (word: string) => {
+    const isCorrect = answer === answers[answers.indexOf(word)];
     setClickedCardIndex(answers.indexOf(word));
     setButtonsDisabled(true);
 
-    setTimeout(reset, 1200);
+    setTimeout(reset, isCorrect ? 1000 : 3000);
   };
 
+  useEffect(() => {
+    reset();
+  }, [inverted, reset]);
+
   const getStatus = (cardIndex: number) => {
-    if (clickedCardIndex === cardIndex) {
-      if (answer === answers[cardIndex]) {
-        return "success";
+    const isCorrect = answer === answers[cardIndex];
+
+    if (clickedCardIndex !== -1) {
+      if (clickedCardIndex === cardIndex) {
+        if (isCorrect) {
+          return "success";
+        }
+        return "error";
       }
-      return "error";
+
+      if (isCorrect) {
+        return "hint";
+      }
     }
 
     return "neutral";
@@ -52,15 +65,19 @@ function WordPanel({ words }: Props) {
 
   return (
     <div className="h-full">
-      <div className="flex justify-between">
-        <button onClick={switchLanguages}>{inverted ? "LT" : "EN"}</button>
-        <button onClick={reset}>Praleisti</button>
-      </div>
-      <div className="grid grid-rows-2 gap-20 h-full">
-        <div className="flex items-center justify-center">
-          <h1 className="text text-5xl uppercase">{word}</h1>
+      <div className="grid grid-rows-2 md:gap-20 h-full">
+        <div>
+          <div className="flex justify-between">
+            <button onClick={switchLanguages}>
+              {inverted ? languages[0] : languages[1]}
+            </button>
+            <button onClick={reset}>Praleisti</button>
+          </div>
+          <div className="flex items-center justify-center h-full">
+            <h1 className="text text-4xl sm:text-5xl uppercase">{word}</h1>
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10">
           {answers.map((value, index) => (
             <WordCard
               key={index}
