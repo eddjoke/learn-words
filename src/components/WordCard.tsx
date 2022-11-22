@@ -3,7 +3,7 @@ import cx from "classnames";
 interface Props extends React.DOMAttributes<HTMLButtonElement> {
   status?: "neutral" | "error" | "success" | "hint";
   children: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: (data: any) => void;
 }
 

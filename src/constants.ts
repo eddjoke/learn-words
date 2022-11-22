@@ -24,7 +24,7 @@ export const words = {
   Foreign: "Užsienio",
   Deals: "Reikalai",
   Lessons: "Pamokos",
-  Expect: "Tikėti",
+  Expect: "Tikėtis",
   Cost: "Kaina",
   Often: "Dažnai",
   Boil: "Virti",
